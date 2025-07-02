@@ -1,4 +1,4 @@
-import { AlignCenterVertical as Certificate, ExternalLink, Calendar, CheckCircle } from "lucide-react";
+import { AlignCenterVertical as Certificate, ExternalLink, Calendar, CheckCircle, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
 const certifications = [
@@ -10,7 +10,7 @@ const certifications = [
     credentialId: "AWS-CSA-2024-001",
     verifyUrl: "#",
     skills: ["Cloud Architecture", "AWS Services", "Security", "Scalability"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-orange-500 to-yellow-500"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const certifications = [
     credentialId: "GCP-PD-2023-045",
     verifyUrl: "#",
     skills: ["GCP Services", "Kubernetes", "DevOps", "Microservices"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-blue-500 to-green-500"
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const certifications = [
     credentialId: "META-FE-2023-789",
     verifyUrl: "#",
     skills: ["React", "JavaScript", "HTML/CSS", "UI/UX"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-blue-600 to-purple-600"
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const certifications = [
     credentialId: "MDB-DEV-2022-456",
     verifyUrl: "#",
     skills: ["NoSQL", "Database Design", "Aggregation", "Performance"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-green-600 to-green-400"
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const certifications = [
     credentialId: "CKA-2022-123",
     verifyUrl: "#",
     skills: ["Kubernetes", "Container Orchestration", "DevOps", "Linux"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-blue-500 to-cyan-500"
   },
   {
     id: 6,
@@ -60,7 +60,7 @@ const certifications = [
     credentialId: "CEH-2021-987",
     verifyUrl: "#",
     skills: ["Cybersecurity", "Penetration Testing", "Network Security", "Risk Assessment"],
-    logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2"
+    color: "from-red-500 to-pink-500"
   }
 ];
 
@@ -93,25 +93,26 @@ export const CertificationsSection = () => {
               whileHover={{ 
                 scale: 1.03,
                 rotateY: 5,
-                boxShadow: "0 25px 50px rgba(0,0,0,0.15)"
+                boxShadow: "0 25px 50px rgba(0,0,0,0.15)",
+                y: -10
               }}
-              className="group bg-card rounded-xl overflow-hidden shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-300"
+              className="group bg-card rounded-xl overflow-hidden shadow-lg border-2 border-border/50 hover:border-primary/30 transition-all duration-500 relative"
             >
-              {/* Header with logo and verify button */}
-              <div className="relative p-6 pb-4">
+              {/* Header with gradient background */}
+              <div className={`relative p-6 pb-4 bg-gradient-to-br ${cert.color} bg-opacity-5`}>
                 <div className="flex items-start justify-between mb-4">
                   <motion.div 
-                    className="w-12 h-12 rounded-lg overflow-hidden bg-secondary/50 flex items-center justify-center"
+                    className="w-14 h-14 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Certificate className="h-6 w-6 text-primary" />
+                    <Certificate className="h-7 w-7 text-primary" />
                   </motion.div>
                   <motion.a
                     href={cert.verifyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                    className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-300 border border-primary/20 hover:border-primary/40"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -122,7 +123,7 @@ export const CertificationsSection = () => {
                 <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors leading-tight">
                   {cert.name}
                 </h3>
-                <p className="text-primary font-semibold mb-1">{cert.issuer}</p>
+                <p className="text-primary font-semibold mb-2">{cert.issuer}</p>
                 
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                   <Calendar className="h-4 w-4" />
@@ -130,14 +131,17 @@ export const CertificationsSection = () => {
                   <CheckCircle className="h-4 w-4 text-green-500 ml-auto" />
                 </div>
 
-                <div className="text-xs text-muted-foreground bg-secondary/30 px-3 py-1 rounded-full inline-block">
+                <div className="text-xs text-muted-foreground bg-secondary/30 px-3 py-2 rounded-full inline-block border">
                   ID: {cert.credentialId}
                 </div>
               </div>
 
               {/* Skills section */}
               <div className="px-6 pb-6">
-                <h4 className="font-semibold text-sm mb-3">Skills Validated:</h4>
+                <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                  <Award className="h-4 w-4 text-primary" />
+                  Skills Validated:
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   {cert.skills.map((skill, i) => (
                     <motion.span
@@ -146,7 +150,7 @@ export const CertificationsSection = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3, delay: i * 0.05 }}
                       whileHover={{ scale: 1.05 }}
-                      className="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 hover:bg-primary/20 transition-colors cursor-default"
+                      className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border-2 border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all duration-300 cursor-default"
                     >
                       {skill}
                     </motion.span>
@@ -156,14 +160,14 @@ export const CertificationsSection = () => {
 
               {/* Hover effect overlay */}
               <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className={`absolute inset-0 bg-gradient-to-br ${cert.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`}
                 initial={false}
               />
             </motion.div>
           ))}
         </div>
 
-        {/* Stats section */}
+        {/* Enhanced Stats section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,39 +175,27 @@ export const CertificationsSection = () => {
           viewport={{ once: true }}
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          <div className="text-center">
-            <motion.div 
-              className="text-3xl font-bold text-primary mb-2"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+          {[
+            { number: certifications.length, label: "Active Certifications", suffix: "+" },
+            { number: 4, label: "Technology Domains", suffix: "" },
+            { number: 100, label: "Verification Rate", suffix: "%" }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              className="text-center p-6 bg-card rounded-xl border-2 border-border/50 hover:border-primary/30 transition-all duration-500 group"
+              whileHover={{ scale: 1.05, y: -5 }}
             >
-              {certifications.length}+
+              <motion.div 
+                className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+              >
+                {stat.number}{stat.suffix}
+              </motion.div>
+              <p className="text-muted-foreground group-hover:text-foreground transition-colors duration-300">{stat.label}</p>
             </motion.div>
-            <p className="text-muted-foreground">Active Certifications</p>
-          </div>
-          <div className="text-center">
-            <motion.div 
-              className="text-3xl font-bold text-primary mb-2"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              4
-            </motion.div>
-            <p className="text-muted-foreground">Technology Domains</p>
-          </div>
-          <div className="text-center">
-            <motion.div 
-              className="text-3xl font-bold text-primary mb-2"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-            >
-              100%
-            </motion.div>
-            <p className="text-muted-foreground">Verification Rate</p>
-          </div>
+          ))}
         </motion.div>
       </div>
     </section>

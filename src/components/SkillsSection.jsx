@@ -59,15 +59,21 @@ export const SkillsSection = () => {
               key={key}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "enhanced-button capitalize font-medium",
+                "px-6 py-3 rounded-full font-medium transition-all duration-300 border-2 relative overflow-hidden group",
                 activeCategory === category
-                  ? "bg-primary text-primary-foreground shadow-lg scale-105"
-                  : "bg-secondary/70 text-foreground hover:bg-secondary hover:scale-105"
+                  ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/25 scale-105"
+                  : "bg-card text-foreground border-border hover:border-primary/50 hover:bg-primary/5 hover:scale-105"
               )}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {category}
+              <span className="relative z-10 capitalize">{category}</span>
+              {activeCategory !== category && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  layoutId="categoryHover"
+                />
+              )}
             </motion.button>
           ))}
         </motion.div>
@@ -76,29 +82,39 @@ export const SkillsSection = () => {
           {filteredSkills.map((skill, key) => (
             <motion.div
               key={key}
-              className="bg-card p-6 rounded-lg shadow-xs card-hover"
+              className="bg-card p-6 rounded-xl shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-500 group"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: key * 0.05 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.02, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
+              whileHover={{ 
+                scale: 1.03, 
+                boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                y: -5
+              }}
             >
               <div className="text-left mb-4">
-                <h3 className="font-semibold text-lg">{skill.name}</h3>
+                <h3 className="font-semibold text-lg group-hover:text-primary transition-colors duration-300">{skill.name}</h3>
               </div>
-              <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-secondary/50 h-3 rounded-full overflow-hidden relative">
                 <motion.div
-                  className="bg-primary h-2 rounded-full origin-left"
+                  className="bg-gradient-to-r from-primary to-primary/80 h-3 rounded-full origin-left relative overflow-hidden"
                   initial={{ width: 0 }}
                   whileInView={{ width: `${skill.level}%` }}
                   transition={{ duration: 1.5, delay: key * 0.1, ease: "easeOut" }}
                   viewport={{ once: true }}
-                />
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    animate={{ x: ['-100%', '100%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  />
+                </motion.div>
               </div>
 
-              <div className="text-right mt-1">
+              <div className="text-right mt-2">
                 <motion.span 
-                  className="text-sm text-muted-foreground"
+                  className="text-sm font-medium text-primary"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: key * 0.1 + 0.5 }}

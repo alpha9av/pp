@@ -32,10 +32,10 @@ export const ContactSection = () => {
   };
 
   const socialLinks = [
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Twitch, href: "#", label: "Twitch" },
+    { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:text-blue-600" },
+    { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-blue-400" },
+    { icon: Instagram, href: "#", label: "Instagram", color: "hover:text-pink-500" },
+    { icon: Twitch, href: "#", label: "Twitch", color: "hover:text-purple-500" },
   ];
 
   return (
@@ -80,26 +80,26 @@ export const ContactSection = () => {
               ].map((item, index) => (
                 <motion.div 
                   key={index}
-                  className="flex items-start space-x-4 group"
+                  className="flex items-start space-x-4 group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, x: 5 }}
                 >
                   <motion.div 
-                    className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors"
-                    whileHover={{ rotate: 360 }}
+                    className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 border-2 border-primary/20 group-hover:border-primary/40"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
                     <item.icon className="h-6 w-6 text-primary" />
                   </motion.div>
                   <div>
-                    <h4 className="font-medium">{item.label}</h4>
+                    <h4 className="font-medium group-hover:text-primary transition-colors duration-300">{item.label}</h4>
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="text-muted-foreground hover:text-primary transition-colors"
+                        className="text-muted-foreground hover:text-primary transition-colors duration-300"
                       >
                         {item.value}
                       </a>
@@ -119,10 +119,14 @@ export const ContactSection = () => {
                     key={index}
                     href={social.href} 
                     target="_blank"
-                    className="p-3 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-300"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className={`p-3 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-300 border-2 border-primary/20 hover:border-primary/40 ${social.color}`}
+                    whileHover={{ scale: 1.1, rotate: 5, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label={social.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
                   >
                     <social.icon size={20} />
                   </motion.a>
@@ -132,11 +136,12 @@ export const ContactSection = () => {
           </motion.div>
 
           <motion.div
-            className="bg-card p-8 rounded-lg shadow-xs border border-border/50"
+            className="bg-card p-8 rounded-xl shadow-lg border-2 border-border/50 hover:border-primary/30 transition-all duration-500"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
+            whileHover={{ boxShadow: "0 25px 50px rgba(0,0,0,0.15)" }}
           >
             <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
 
@@ -158,7 +163,7 @@ export const ContactSection = () => {
                   id="name"
                   name="name"
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300 hover:border-primary/50"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 hover:border-primary/50"
                   placeholder="Pedro Machado..."
                 />
               </motion.div>
@@ -180,7 +185,7 @@ export const ContactSection = () => {
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300 hover:border-primary/50"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 hover:border-primary/50"
                   placeholder="john@gmail.com"
                 />
               </motion.div>
@@ -202,7 +207,7 @@ export const ContactSection = () => {
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none transition-all duration-300 hover:border-primary/50"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none transition-all duration-300 hover:border-primary/50"
                   placeholder="Hello, I'd like to talk about..."
                 />
               </motion.div>
@@ -211,17 +216,30 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "enhanced-button bg-primary text-primary-foreground w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]"
+                  "enhanced-button bg-primary text-primary-foreground w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] hover:scale-105 active:scale-95 transition-all duration-300"
                 )}
-                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                whileHover={{ y: isSubmitting ? 0 : -2 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send size={16} />
+                {isSubmitting ? (
+                  <>
+                    <motion.div
+                      className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send size={16} />
+                  </>
+                )}
               </motion.button>
             </form>
           </motion.div>
